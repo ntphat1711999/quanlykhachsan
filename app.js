@@ -22,7 +22,7 @@ app.use(cors());
 app.use(express.json());
 
 // routes
-app.use("/", require("./routes/room.routes"));
+app.use("/room", require("./routes/room.route"));
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
