@@ -1,0 +1,20 @@
+const mongoose = require("mongoose");
+
+const RoomSchema = new mongoose.Schema({
+  ten_phong: {
+    type: String,
+    lowercase: true,
+    trim: true,
+    required: true
+  },
+  loai: {
+    type: Number,
+    required: true
+  },
+  tinh_trang: {
+    type: Boolean,
+    default: false
+  }
+});
+
+module.exports = mongoose.model("room", RoomSchema);
