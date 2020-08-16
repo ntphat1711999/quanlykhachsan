@@ -1,15 +1,14 @@
-const express = require("express");
 const router = require("express").Router();
+
+// mws
+const auth = require("../middlewares/auth");
 
 // models
 const Room = require("../models/room.model");
 
-// controllers
-const controller = require("../controllers/room.controller");
-
 router
   .route("/")
-  .get((req, res) => {
+  .get(auth, (req, res) => {
     res.send("room");
   })
   .post()

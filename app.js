@@ -27,7 +27,11 @@ app.use(express.json());
 app.set("view engine", "ejs");
 
 // routes
+<<<<<<< HEAD
 app.use("/", require("./routes/room.route"));
+=======
+app.use("/room", require("./routes/room.route"));
+>>>>>>> origin/manage-view
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
