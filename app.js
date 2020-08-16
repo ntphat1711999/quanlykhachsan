@@ -21,6 +21,9 @@ mongoose.connection.on("error", (err) => {
 app.use(cors());
 app.use(express.json());
 
+// routes
+app.use("/", require("./routes/room.routes"));
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
