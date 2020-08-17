@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+    />
+    <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/libs/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/vendor/charts/chartist-bundle/chartist.css"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/vendor/charts/morris-bundle/morris.css"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css"
+    />
+    <link rel="stylesheet" href="assets/vendor/charts/c3charts/c3.css" />
+    <link
+      rel="stylesheet"
+      href="assets/vendor/fonts/flag-icon-css/flag-icon.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;1,100&display=swap"
+      rel="stylesheet"
+    />
+    <title>Quản lý khách sạn</title>
+  </head>
+
+  <body>
+    <!-- ============================================================== -->
+    <!-- main wrapper -->
+    <!-- ============================================================== -->
+    <div class="dashboard-main-wrapper">
+      <!-- ============================================================== -->
+      <!-- navbar -->
+      <!-- ============================================================== -->
+      <%- include('partials/header') %>
+      <!-- ============================================================== -->
+      <!-- end navbar -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- left sidebar -->
+      <!-- ============================================================== -->
+      <%- include('partials/sidebar') %>
+      <!-- ============================================================== -->
+      <!-- end left sidebar -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- wrapper  -->
+      <!-- ============================================================== -->
+      <div class="dashboard-wrapper">
+        <div class="dashboard-ecommerce">
+          <div class="container-fluid dashboard-content">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="page-header">
+                  <h2 class="pageheader-title">
+                    Trang chủ
+                  </h2>
+                  <div class="page-breadcrumb">
+                    <nav aria-label="breadcrumb">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item active">
+                          <a href="/" class="breadcrumb-link">Trang chủ</a>
+                        </li>
+                      </ol>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end pageheader  -->
+            <!-- ============================================================== -->
+            <div class="ecommerce-widget">
+              <div class="row">
+                <!-- ============================================================== -->
+                <!-- sales  -->
+                <!-- ============================================================== -->
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                  <div class="card border-3 border-top border-top-primary">
+                    <img
+                      src="https://images.unsplash.com/photo-1537572263231-4314a30d444f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80"
+                      alt="thucan"
+                      width="100%"
+                      height="200px"
+                    />
+                    <div class="card-body">
+                      <a href="/datphong" class="btn btn-outline-primary"
+                        >ĐẶT PHÒNG</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end sales  -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- total orders  -->
+                <!-- ============================================================== -->
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                  <div class="card border-3 border-top border-top-primary">
+                    <img
+                      src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80"
+                      alt="thucan"
+                      width="100%"
+                      height="200px"
+                    />
+                    <div class="card-body">
+                      <a href="/traphong" class="btn btn-outline-primary"
+                        >Trả phòng</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end total orders  -->
+                <!-- ============================================================== -->
+
+                <!-- ============================================================== -->
+                <!-- total orders  -->
+                <!-- ============================================================== -->
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                  <div class="card border-3 border-top border-top-primary">
+                    <img
+                      src="https://images.unsplash.com/photo-1515362778563-6a8d0e44bc0b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+                      alt="thucan"
+                      width="100%"
+                      height="200px"
+                    />
+                    <div class="card-body">
+                      <a href="/hoadonthuephong" class="btn btn-outline-primary"
+                        >HOÁ ĐƠN THUÊ PHÒNG</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end total orders  -->
+                <!-- ============================================================== -->
+              </div>
+
+              <div class="row">
+                <!-- ============================================================== -->
+                <!-- total orders  -->
+                <!-- ============================================================== -->
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                  <div class="card border-3 border-top border-top-danger">
+                    <img
+                      src="/assets/images/food1.png"
+                      alt="thucan"
+                      width="100%"
+                      height="200px"
+                    />
+                    <div class="card-body">
+                      <a href="/datthucan" class="btn btn-outline-danger"
+                        >ĐẶT THỨC ĂN</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end total orders  -->
+                <!-- ============================================================== -->
+
+                <!-- ============================================================== -->
+                <!-- total orders  -->
+                <!-- ============================================================== -->
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                  <div class="card border-3 border-top border-top-danger">
+                    <img
+                      src="/assets/images/food2.png"
+                      alt="thucan"
+                      width="100%"
+                      height="200px"
+                    />
+                    <div class="card-body">
+                      <a href="/hoadonthucan" class="btn btn-outline-danger"
+                        >HOÁ ĐƠN THỨC ĂN</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end total orders  -->
+                <!-- ============================================================== -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <!-- <div class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                Copyright © 2018 Concept. All rights reserved. Dashboard by
+                <a href="https://colorlib.com/wp/">Colorlib</a>.
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <%- include('partials/footer') %>
+        <!-- ============================================================== -->
+        <!-- end footer -->
+        <!-- ============================================================== -->
+      </div>
+      <!-- ============================================================== -->
+      <!-- end wrapper  -->
+      <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- end main wrapper  -->
+    <!-- ============================================================== -->
+    <!-- Optional JavaScript -->
+    <!-- jquery 3.3.1 -->
+    <script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <!-- bootstap bundle js -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <!-- slimscroll js -->
+    <script src="assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+    <!-- main js -->
+    <script src="assets/libs/js/main-js.js"></script>
+    <!-- chart chartist js -->
+    <script src="assets/vendor/charts/chartist-bundle/chartist.min.js"></script>
+    <!-- sparkline js -->
+    <script src="assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
+    <!-- morris js -->
+    <script src="assets/vendor/charts/morris-bundle/raphael.min.js"></script>
+    <script src="assets/vendor/charts/morris-bundle/morris.js"></script>
+    <!-- chart c3 js -->
+    <script src="assets/vendor/charts/c3charts/c3.min.js"></script>
+    <script src="assets/vendor/charts/c3charts/d3-5.4.0.min.js"></script>
+    <script src="assets/vendor/charts/c3charts/C3chartjs.js"></script>
+    <script src="assets/libs/js/dashboard-ecommerce.js"></script>
+  </body>
+</html>

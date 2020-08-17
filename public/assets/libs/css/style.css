@@ -1012,6 +1012,10 @@ Borders
   border-top-color: #5969ff !important;
 }
 
+.border-top-danger {
+  border-top-color: #ff407b  !important;
+}
+
 .border-3 {
   border-width: 3px !important;
 }

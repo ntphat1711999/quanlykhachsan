@@ -7,20 +7,17 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Concept - Bootstrap 4 Admin Dashboard Template</title>
+    <title>Sign up</title>
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
-      href="./assets/vendor/bootstrap/css/bootstrap.min.css"
+      href="/assets/vendor/bootstrap/css/bootstrap.min.css"
     />
-    <link
-      href="./assets/vendor/fonts/circular-std/style.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./assets/libs/css/style.css" />
+    <link href="/assets/vendor/fonts/circular-std/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/libs/css/style.css" />
     <link
       rel="stylesheet"
-      href="./assets/vendor/fonts/fontawesome/css/fontawesome-all.css"
+      href="/assets/vendor/fonts/fontawesome/css/fontawesome-all.css"
     />
     <style>
       html,
@@ -55,20 +52,19 @@
           <div class="form-group">
             <input
               class="form-control form-control-lg"
-              type="text"
-              name="nick"
-              required=""
-              placeholder="Username"
+              type="email"
+              name="email"
+              required
+              placeholder="E-mail"
               autocomplete="off"
             />
           </div>
           <div class="form-group">
             <input
               class="form-control form-control-lg"
-              type="email"
-              name="email"
-              required=""
-              placeholder="E-mail"
+              type="text"
+              required
+              placeholder="Name"
               autocomplete="off"
             />
           </div>
@@ -77,14 +73,15 @@
               class="form-control form-control-lg"
               id="pass1"
               type="password"
-              required=""
+              required
               placeholder="Password"
             />
           </div>
           <div class="form-group">
             <input
               class="form-control form-control-lg"
-              required=""
+              required
+              type="password"
               placeholder="Confirm"
             />
           </div>
@@ -96,7 +93,8 @@
         </div>
         <div class="card-footer bg-white">
           <p>
-            Already member? <a href="#" class="text-secondary">Login Here.</a>
+            Already member?
+            <a href="/auth/signin" class="text-secondary">Login Here.</a>
           </p>
         </div>
       </div>
