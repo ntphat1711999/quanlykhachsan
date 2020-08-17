@@ -2,7 +2,7 @@ const auth = (req, res, next) => {
   if (req.user) {
     return next();
   }
-  return res.send("404 not found");
+  return res.redirect("/auth/signin");
 };
 
 module.exports = auth;

@@ -1,6 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const flash = require('connect-flash');
+const passport = require('passport');
+const session = require('express-session');
+const path = require('path');
 
 const app = express();
 const PORT = 5000;
@@ -11,9 +15,10 @@ mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
+  useCreateIndex: true
 });
 mongoose.connection.on("connected", () => {
-  console.log("Connectd to mongo successfully");
+  console.log("Connected to mongo successfully");
 });
 mongoose.connection.on("error", (err) => {
   console.log("Connected to mongo fail", err);
@@ -25,6 +30,30 @@ app.use(express.json());
 
 // use ejs engine
 app.set("view engine", "ejs");
+
+// express body parser
+app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: "quan_ly_khach_san",
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        maxAge: 1000 * 3600 * 24
+    }
+}))
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+// flash
+app.use(flash());
+app.use(require('./middlewares/flash'));
+
+// passport
+require('./config/passport')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // routes
 app.use("/", require("./routes/index.route"));
