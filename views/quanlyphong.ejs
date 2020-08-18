@@ -130,109 +130,30 @@
                             <th>STT</th>
                             <th>Tên phòng</th>
                             <th>Loại phòng</th>
-                            <th>Đơn giá</th>
                             <th>Tình trạng</th>
                             <th>Tuỳ chỉnh</th>
                           </tr>
                         </thead>
                         <tbody>
+                          <% rooms.forEach((element, index) => { %>
                           <tr>
-                            <td>1</td>
-                            <td>Phòng 101</td>
-                            <td>VIP 1</td>
-                            <td>1.000.000</td>
+                            <td><%= index %></td>
+                            <td><%= element.ten_phong%></td>
+                            <td><%= element.loai.ten %></td>
                             <td>
+                              <% if (element.tinh_trang) { %>
                               <button type="button" class="btn btn-danger">
                                 Bận
                               </button>
-                            </td>
-                            <td>
-                              <a
-                                href="/quanlyphong/chinhsuaphong"
-                                class="btn btn-dark"
-                              >
-                                Chỉnh sửa <i class="fas fa-edit"></i
-                              ></a>
-                              <button
-                                type="button"
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                                class="btn btn-danger"
-                              >
-                                Xoá
-                                <i class="fas fa-trash"></i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Phòng 101</td>
-                            <td>VIP 1</td>
-                            <td>1.000.000</td>
-                            <td>
-                              <button type="button" class="btn btn-danger">
-                                Bận
-                              </button>
-                            </td>
-                            <td>
-                              <a
-                                href="/quanlyphong/chinhsuaphong"
-                                class="btn btn-dark"
-                              >
-                                Chỉnh sửa <i class="fas fa-edit"></i
-                              ></a>
-                              <button
-                                type="button"
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                                class="btn btn-danger"
-                              >
-                                Xoá
-                                <i class="fas fa-trash"></i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Phòng 101</td>
-                            <td>VIP 1</td>
-                            <td>1.000.000</td>
-                            <td>
-                              <button type="button" class="btn btn-danger">
-                                Bận
-                              </button>
-                            </td>
-                            <td>
-                              <a
-                                href="/quanlyphong/chinhsuaphong"
-                                class="btn btn-dark"
-                              >
-                                Chỉnh sửa <i class="fas fa-edit"></i
-                              ></a>
-                              <button
-                                type="button"
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                                class="btn btn-danger"
-                              >
-                                Xoá
-                                <i class="fas fa-trash"></i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Phòng 101</td>
-                            <td>VIP 1</td>
-                            <td>1.000.000</td>
-                            <td>
+                              <% } else { %>
                               <button type="button" class="btn btn-success">
                                 Trống
                               </button>
+                              <% } %>
                             </td>
                             <td>
                               <a
-                                href="/quanlyphong/chinhsuaphong"
+                                href="/quanlyphong/chinhsuaphong/<%= element.id %>"
                                 class="btn btn-dark"
                               >
                                 Chỉnh sửa <i class="fas fa-edit"></i
@@ -246,64 +167,50 @@
                                 Xoá
                                 <i class="fas fa-trash"></i>
                               </button>
+                              <!-- Modal -->
+                              <div
+                                class="modal fade"
+                                id="exampleModalCenter"
+                                tabindex="-1"
+                                role="dialog"
+                                aria-labelledby="exampleModalCenterTitle"
+                                aria-hidden="true"
+                              >
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">
+                                        Bạn có thực sự muốn xoá không ?
+                                      </h5>
+                                      <button
+                                        type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close"
+                                      >
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-dismiss="modal"
+                                      >
+                                        Huỷ bỏ
+                                      </button>
+                                      <form action="/quanlyphong/xoaphong/<%= element._id %>" method="POST">
+                                        <button type="submit" class="btn btn-primary">
+                                          Chấp nhận
+                                        </button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             </td>
                           </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Phòng 101</td>
-                            <td>VIP 1</td>
-                            <td>1.000.000</td>
-                            <td>
-                              <button type="button" class="btn btn-danger">
-                                Bận
-                              </button>
-                            </td>
-                            <td>
-                              <a
-                                href="/quanlyphong/chinhsuaphong"
-                                class="btn btn-dark"
-                              >
-                                Chỉnh sửa <i class="fas fa-edit"></i
-                              ></a>
-                              <button
-                                type="button"
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                                class="btn btn-danger"
-                              >
-                                Xoá
-                                <i class="fas fa-trash"></i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Phòng 101</td>
-                            <td>VIP 1</td>
-                            <td>1.000.000</td>
-                            <td>
-                              <button type="button" class="btn btn-success">
-                                Trống
-                              </button>
-                            </td>
-                            <td>
-                              <a
-                                href="/quanlyphong/chinhsuaphong"
-                                class="btn btn-dark"
-                              >
-                                Chỉnh sửa <i class="fas fa-edit"></i
-                              ></a>
-                              <button
-                                type="button"
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                                class="btn btn-danger"
-                              >
-                                Xoá
-                                <i class="fas fa-trash"></i>
-                              </button>
-                            </td>
-                          </tr>
+                          <% }) %>
                         </tbody>
                       </table>
                     </div>
@@ -327,45 +234,7 @@
       <!-- ============================================================== -->
       <!-- end wrapper  -->
       <!-- ============================================================== -->
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="exampleModalCenter"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">
-                Bạn có thực sự muốn xoá không ?
-              </h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Huỷ bỏ
-              </button>
-              <button type="button" class="btn btn-primary">
-                Chấp nhận
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </div>
     <!-- ============================================================== -->
     <!-- end main wrapper  -->

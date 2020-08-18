@@ -4,6 +4,7 @@ const catRoom = require("../models/cat-room.model");
 const Visitor = require("../models/visitor.model");
 const RoomBill = require("../models/roombill.model");
 const { response } = require("express");
+const { route } = require("./auth.route");
 
 router.get("/", (req, res) => {
   res.render("index");
@@ -71,7 +72,6 @@ router.get("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
 
 router.post("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
   const { ten, soluong, dongia } = req.body;
-  console.log(ten,' ', soluong, ' ', dongia);
   catRoom
     .findByIdAndUpdate(req.params.id, {
       ten: ten,
@@ -89,15 +89,101 @@ router.post("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
 
 // Quản lý phòng
 router.get("/quanlyphong", (req, res) => {
-  res.render("quanlyphong");
+  Room
+    .find()
+    .populate("loai")
+    .then(response => {
+      res.render("quanlyphong", {
+        rooms: response
+      });
+    })
+    .catch((err) => {
+      console.log(err.message);
+      res.redirect("/quanlyloaiphong");
+    });
 });
 
 router.get("/quanlyphong/themphong", (req, res) => {
-  res.render("themphong");
+  catRoom
+    .find()
+    .then(response => {
+      res.render("themphong", {
+        catRooms: response
+      });
+    })
+    .catch((err) => {
+      console.log(err.message);
+      res.redirect("back");
+    });
 });
 
-router.get("/quanlyphong/chinhsuaphong", (req, res) => {
-  res.render("chinhsuaphong");
+router.post("/quanlyphong/themphong", (req, res) => {
+  const { tenphong, loaiphong } =  req.body;
+  let newRoom = new Room();
+  newRoom.ten_phong = tenphong;
+  newRoom.loai = loaiphong;
+
+  newRoom
+    .save()
+    .then((response) => {
+      res.redirect("/quanlyphong");
+    })
+    .catch((err) => {
+      console.log(err.message);
+      res.redirect("back");
+    });
+});
+
+router.get("/quanlyphong/chinhsuaphong/:id", (req, res) => {
+  let cat;
+  catRoom
+    .find()
+    .then(cats => {
+      cat = cats;
+    })
+    .catch((err) => {
+      console.log(err.message);
+      res.redirect("back");
+    });
+  Room
+   .findById(req.params.id)
+   .populate("loai")
+   .then(response => {
+     res.render("chinhsuaphong", {
+       room: response,
+       cat
+     });
+    })
+    .catch((err) => {
+      console.log(err.message);
+      res.redirect("back");
+    });
+});
+
+router.post("/quanlyphong/chinhsuaphong/:id", (req, res) => {
+  const { tenphong, loaiphong, tinhtrang } = req.body;
+  Room
+    .findByIdAndUpdate(req.params.id, {
+      ten_phong: tenphong,
+      loai: loaiphong,
+      tinh_trang: tinhtrang
+    })
+    .then((response) => {
+      res.redirect("/quanlyphong");
+    })
+    .catch((err) => {
+      res.redirect("back");
+    });
+});
+
+router.post("/quanlyphong/xoaphong/:id", (req, res) => {
+  Room.findByIdAndRemove(req.params.id)
+    .then(response => {
+      res.redirect("back");
+    })
+    .catch((err) => {
+      res.redirect("back");
+    });
 });
 
 // Quản lý thức ăn
