@@ -3,6 +3,7 @@ const Room = require("../models/room.model");
 const catRoom = require("../models/cat-room.model");
 const Visitor = require("../models/visitor.model");
 const RoomBill = require("../models/roombill.model");
+const { response } = require("express");
 
 router.get("/", (req, res) => {
   res.render("index");
@@ -13,7 +14,6 @@ router.get("/quanlyloaiphong", (req, res) => {
   catRoom
     .find()
     .then((response) => {
-      console.log(response);
       res.render("quanlyloaiphong", {
         catRooms: response,
       });
@@ -39,20 +39,26 @@ router.post("/quanlyloaiphong/themloaiphong", (req, res) => {
       res.redirect("/quanlyloaiphong");
     })
     .catch((err) => {
-      console.log(err);
       res.redirect("/quanlyloaiphong");
     });
 });
 
-router.post("/quanlyloaiphong/xoaloaiphong", (req, res) => {
-  console.log(req.body);
+router.post("/quanlyloaiphong/xoaloaiphong/:id", (req, res) => {
+  catRoom
+    .findByIdAndRemove(req.params.id)
+    .then((response) => {
+      res.redirect("back");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/quanlyloaiphong");
+    });
 });
 
 router.get("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
   catRoom
     .findById(req.params.id)
     .then((response) => {
-      console.log(response);
       res.render("chinhsualoaiphong", {
         catRoom: response,
       });
@@ -65,6 +71,7 @@ router.get("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
 
 router.post("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
   const { ten, soluong, dongia } = req.body;
+  console.log(ten,' ', soluong, ' ', dongia);
   catRoom
     .findByIdAndUpdate(req.params.id, {
       ten: ten,
@@ -72,7 +79,6 @@ router.post("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
       don_gia: dongia,
     })
     .then((response) => {
-      console.log(response);
       res.redirect("/quanlyloaiphong");
     })
     .catch((err) => {
