@@ -5,16 +5,17 @@ const RoomSchema = new mongoose.Schema({
     type: String,
     lowercase: true,
     trim: true,
-    required: true
+    required: true,
   },
   loai: {
-    type: Number,
-    required: true
+    type: String,
+    required: true,
+    ref: "catRoom",
   },
   tinh_trang: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("room", RoomSchema);

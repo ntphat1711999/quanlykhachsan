@@ -135,14 +135,15 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <% catRooms.forEach((element, index) => { %>
                           <tr>
-                            <td>1</td>
-                            <td>VIP 1</td>
-                            <td>10</td>
-                            <td>1.000.000</td>
+                            <td><%= index + 1 %></td>
+                            <td><%= element.ten%></td>
+                            <td><%= element.so_luong%></td>
+                            <td><%= element.don_gia%></td>
                             <td>
                               <a
-                                href="/quanlyloaiphong/chinhsualoaiphong"
+                                href="/quanlyloaiphong/chinhsualoaiphong/<%= element._id %>"
                                 class="btn btn-dark"
                               >
                                 Chỉnh sửa <i class="fas fa-edit"></i
@@ -158,6 +159,7 @@
                               </button>
                             </td>
                           </tr>
+                          <% }) %>
                         </tbody>
                       </table>
                     </div>
@@ -213,9 +215,12 @@
               >
                 Huỷ bỏ
               </button>
-              <button type="button" class="btn btn-primary">
-                Chấp nhận
-              </button>
+              <form action="" method="POST">
+                <input type="hidden" name="id" id="iddel" value="" />
+                <button type="button" class="btn btn-primary del-product">
+                  Chấp nhận
+                </button>
+              </form>
             </div>
           </div>
         </div>

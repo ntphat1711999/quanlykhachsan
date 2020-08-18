@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     trim: true,
-    required: true
+    required: true,
   },
   password: {
     type: String,
@@ -22,8 +22,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     lowercase: true,
     trim: true,
-    enum: ["quan_ly", "le_tan", "nha_hang", "guest"],
-    default: "guest",
+    enum: ["quan_ly", "le_tan"],
+    default: "quan_ly",
   },
 });
 

@@ -1,23 +1,78 @@
 const router = require("express").Router();
+const Room = require("../models/room.model");
+const catRoom = require("../models/cat-room.model");
 
-// middleware
-const auth = require("../middlewares/auth");
-
-router.get("/", auth, (req, res) => {
+router.get("/", (req, res) => {
   res.render("index");
 });
 
 // Quản lý loại phòng
 router.get("/quanlyloaiphong", (req, res) => {
-  res.render("quanlyloaiphong");
+  catRoom
+    .find()
+    .then((response) => {
+      console.log(response);
+      res.render("quanlyloaiphong", {
+        catRooms: response,
+      });
+    })
+    .catch((err) => console.log(err));
 });
 
 router.get("/quanlyloaiphong/themloaiphong", (req, res) => {
   res.render("themloaiphong");
 });
 
-router.get("/quanlyloaiphong/chinhsualoaiphong", (req, res) => {
-  res.render("chinhsualoaiphong");
+router.post("/quanlyloaiphong/themloaiphong", (req, res) => {
+  const { ten, soluong, dongia } = req.body;
+  const newCatRoom = new catRoom({
+    ten: ten,
+    so_luong: soluong,
+    don_gia: dongia,
+  });
+
+  newCatRoom
+    .save()
+    .then((response) => {
+      res.redirect("/quanlyloaiphong");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/quanlyloaiphong");
+    });
+});
+
+router.get("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
+  catRoom
+    .findById(req.params.id)
+    .then((response) => {
+      console.log(response);
+      res.render("chinhsualoaiphong", {
+        catRoom: response,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/quanlyloaiphong");
+    });
+});
+
+router.post("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
+  const { ten, soluong, dongia } = req.body;
+  catRoom
+    .findByIdAndUpdate(req.params.id, {
+      ten: ten,
+      so_luong: soluong,
+      don_gia: dongia,
+    })
+    .then((response) => {
+      console.log(response);
+      res.redirect("/quanlyloaiphong");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/quanlyloaiphong");
+    });
 });
 
 // Quản lý phòng
