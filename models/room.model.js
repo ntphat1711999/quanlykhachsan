@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const RoomSchema = new mongoose.Schema({
   ten_phong: {
     type: String,
-    lowercase: true,
     trim: true,
     required: true,
   },

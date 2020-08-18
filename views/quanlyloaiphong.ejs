@@ -136,7 +136,7 @@
                         </thead>
                         <tbody>
                           <% catRooms.forEach((element, index) => { %>
-                          <tr>
+                          <tr class="cat">
                             <td><%= index + 1 %></td>
                             <td><%= element.ten%></td>
                             <td><%= element.so_luong%></td>
@@ -152,7 +152,7 @@
                                 type="button"
                                 data-toggle="modal"
                                 data-target="#exampleModalCenter"
-                                class="btn btn-danger"
+                                class="btn btn-danger btn-del"
                               >
                                 Xoá
                                 <i class="fas fa-trash"></i>
@@ -215,9 +215,9 @@
               >
                 Huỷ bỏ
               </button>
-              <form action="" method="POST">
+              <form action="/quanlyloaiphong/xoaloaiphong" method="POST">
                 <input type="hidden" name="id" id="iddel" value="" />
-                <button type="button" class="btn btn-primary del-product">
+                <button type="submit" class="btn btn-primary del-product">
                   Chấp nhận
                 </button>
               </form>

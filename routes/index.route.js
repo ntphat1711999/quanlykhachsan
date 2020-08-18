@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const Room = require("../models/room.model");
 const catRoom = require("../models/cat-room.model");
+const Visitor = require("../models/visitor.model");
+const RoomBill = require("../models/roombill.model");
 
 router.get("/", (req, res) => {
   res.render("index");
@@ -40,6 +42,10 @@ router.post("/quanlyloaiphong/themloaiphong", (req, res) => {
       console.log(err);
       res.redirect("/quanlyloaiphong");
     });
+});
+
+router.post("/quanlyloaiphong/xoaloaiphong", (req, res) => {
+  console.log(req.body);
 });
 
 router.get("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
@@ -123,12 +129,55 @@ router.get("/doimatkhau", (req, res) => {
 });
 
 router.get("/datphong", (req, res) => {
-  res.render("datphong");
+  Room.find()
+    .then((response) => {
+      res.render("datphong", {
+        rooms: response,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.render("datphong");
+    });
 });
 
-router.get("/traphong", (req, res) => {
-  res.render("danhsachdatphong");
+router.post("/datphong", (req, res) => {
+  const { ten, cmnd, phong_thue, ngay_thue } = req.body;
+  const newVistor = new Visitor({
+    ten,
+    cmnd,
+    phong_thue,
+    ngay_thue,
+  });
+
+  newVistor
+    .save()
+    .then((res) => {
+      console.log(res);
+      res.redirect("/datphong");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/datphong");
+    });
 });
+
+// Trả phòng
+router.get("/traphong", (req, res) => {
+  Visitor.find()
+    .then((response) => {
+      console.log(response);
+      res.render("danhsachdatphong", {
+        datphong: response,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.render("danhsachdatphong");
+    });
+});
+
+router.post("/traphong", (req, res) => {});
 
 router.get("/traphong/thanhtoan", (req, res) => {
   res.render("thanhtoanphong");
@@ -139,7 +188,20 @@ router.get("/traphong/chinhsuadatphong", (req, res) => {
 });
 
 router.get("/hoadonthuephong", (req, res) => {
-  res.render("danhsachhoadonthuephong");
+  RoomBill.find()
+    .then((response) => {
+      console.log(response);
+      res.render("danhsachhoadonthuephong", {
+        roombills: response,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/hoadonthuephong/xoahoadon", (req, res) => {
+  RoomBill.findByIdAndRemove();
 });
 
 router.get("/datthucan", (req, res) => {
