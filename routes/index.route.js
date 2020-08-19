@@ -71,7 +71,7 @@ router.get("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
 
 router.post("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
   const { ten, soluong, dongia } = req.body;
-  console.log(ten,' ', soluong, ' ', dongia);
+  console.log(ten, " ", soluong, " ", dongia);
   catRoom
     .findByIdAndUpdate(req.params.id, {
       ten: ten,
@@ -126,6 +126,7 @@ router.get("/quanlynhanvien/chinhsuanhanvien", (req, res) => {
   res.render("chinhsuanhanvien");
 });
 
+// Quản lý tài khoản
 router.get("/capnhatthongtin", (req, res) => {
   res.render("capnhatthongtin");
 });
@@ -134,6 +135,7 @@ router.get("/doimatkhau", (req, res) => {
   res.render("changepassword");
 });
 
+// Đặt phòng
 router.get("/datphong", (req, res) => {
   Room.find()
     .then((response) => {
@@ -193,6 +195,7 @@ router.get("/traphong/chinhsuadatphong", (req, res) => {
   res.render("chinhsuadatphong");
 });
 
+// Hoá đơn thuê phòng
 router.get("/hoadonthuephong", (req, res) => {
   RoomBill.find()
     .then((response) => {
@@ -210,6 +213,7 @@ router.get("/hoadonthuephong/xoahoadon", (req, res) => {
   RoomBill.findByIdAndRemove();
 });
 
+// Đặt thức ăn
 router.get("/datthucan", (req, res) => {
   res.render("datthucan");
 });
