@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const Room = require("../models/room.model");
 const catRoom = require("../models/cat-room.model");
-const Visitor = require("../models/visitor.model");
 const RoomBill = require("../models/roombill.model");
 const { response } = require("express");
 const { route } = require("./auth.route");
@@ -221,7 +220,7 @@ router.get("/doimatkhau", (req, res) => {
 
 // Đặt phòng
 router.get("/datphong", (req, res) => {
-  Room.find()
+  Room.find({ tinh_trang: false })
     .then((response) => {
       res.render("datphong", {
         rooms: response,
@@ -235,18 +234,27 @@ router.get("/datphong", (req, res) => {
 
 router.post("/datphong", (req, res) => {
   const { ten, cmnd, phong_thue, ngay_thue } = req.body;
-  const newVistor = new Visitor({
+  console.log({ ten, cmnd, phong_thue, ngay_thue });
+  const newRoomBill = new RoomBill({
     ten,
     cmnd,
     phong_thue,
     ngay_thue,
   });
 
-  newVistor
+  newRoomBill
     .save()
-    .then((res) => {
-      console.log(res);
-      res.redirect("/datphong");
+    .then((response) => {
+      console.log(response);
+      Room.findByIdAndUpdate(
+        response.phong_thue,
+        { tinh_trang: true },
+        (err, doc) => {
+          if (!err) {
+            res.redirect("/traphong");
+          }
+        }
+      );
     })
     .catch((err) => {
       console.log(err);
@@ -256,7 +264,8 @@ router.post("/datphong", (req, res) => {
 
 // Trả phòng
 router.get("/traphong", (req, res) => {
-  Visitor.find()
+  RoomBill.find()
+    .populate("phong_thue")
     .then((response) => {
       console.log(response);
       res.render("danhsachdatphong", {
@@ -269,10 +278,38 @@ router.get("/traphong", (req, res) => {
     });
 });
 
-router.post("/traphong", (req, res) => {});
+router.get("/traphong/thanhtoan/:id", (req, res) => {
+  RoomBill.findById(req.params.id)
+    .populate({ path: "phong_thue", populate: { path: "loai" } })
+    .then((response) => {
+      let now = new Date();
+      response.songaythue = response.ngay_thue.getDay() - now.getDay();
+      console.log(response);
+      res.render("thanhtoanphong", {
+        roombill: response,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
-router.get("/traphong/thanhtoan", (req, res) => {
-  res.render("thanhtoanphong");
+router.post("/traphong/thanhtoan/:id", (req, res) => {
+  RoomBill.findByIdAndUpdate(req.params.id, {
+    thanh_toan: true,
+  })
+    .then((response) => {
+      console.log(response);
+      Room.findByIdAndUpdate(response.phong_thue, {
+        tinh_trang: false,
+      }).then((response) => {
+        console.log(response);
+        res.redirect("/");
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 router.get("/traphong/chinhsuadatphong", (req, res) => {
@@ -281,7 +318,7 @@ router.get("/traphong/chinhsuadatphong", (req, res) => {
 
 // Hoá đơn thuê phòng
 router.get("/hoadonthuephong", (req, res) => {
-  RoomBill.find()
+  RoomBill.find({ thanh_toan: true })
     .then((response) => {
       console.log(response);
       res.render("danhsachhoadonthuephong", {
@@ -293,8 +330,28 @@ router.get("/hoadonthuephong", (req, res) => {
     });
 });
 
-router.get("/hoadonthuephong/xoahoadon", (req, res) => {
-  RoomBill.findByIdAndRemove();
+router.post("traphong/xoadatphong/:id", (req, res) => {
+  RoomBill.findByIdAndDelete(req.params.id)
+    .then((response) => {
+      console.log(response);
+      res.redirect("back");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("back");
+    });
+});
+
+router.get("/hoadonthuephong/xoahoadon/:id", (req, res) => {
+  RoomBill.findByIdAndRemove(req.params.id)
+    .then((response) => {
+      console.log(response);
+      res.redirect("back");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("back");
+    });
 });
 
 // Đặt thức ăn

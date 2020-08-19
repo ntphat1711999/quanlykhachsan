@@ -13,7 +13,6 @@ const visistorSchema = new mongoose.Schema({
   },
   phong_thue: {
     type: mongoose.Schema.Types.ObjectId,
-    default: false,
     ref: "room",
   },
   ngay_thue: {

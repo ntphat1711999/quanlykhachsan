@@ -93,7 +93,7 @@
             <!-- ============================================================== -->
             <div class="ecommerce-widget">
               <div>
-                <form class="row">
+                <form class="row" method="POST">
                   <div class="form-group col-6">
                     <label for="name">Tên khách hàng</label>
                     <input
@@ -101,7 +101,7 @@
                       class="form-control"
                       id="name"
                       readonly
-                      value="Nguyễn Văn A"
+                      value="<%= roombill.ten %>"
                     />
                   </div>
                   <div class="form-group col-6">
@@ -111,7 +111,7 @@
                       class="form-control"
                       id="room"
                       readonly
-                      value="Phòng 101"
+                      value="<%= roombill.phong_thue.ten_phong%>"
                     />
                   </div>
                   <div class="form-group col-12">
@@ -126,9 +126,9 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <td>VIP 1</td>
-                          <td>2</td>
-                          <td>500.000</td>
+                          <td><%= roombill.phong_thue.loai.ten %></td>
+                          <td><%= roombill.songaythue %></td>
+                          <td><%= roombill.phong_thue.loai.don_gia %></td>
                           <td>1.000.000</td>
                         </tr>
                       </tbody>

@@ -13,7 +13,6 @@ const roomBillSchema = new mongoose.Schema({
   },
   phong_thue: {
     type: mongoose.Schema.Types.ObjectId,
-    default: false,
     ref: "room",
   },
   ngay_thue: {
@@ -23,6 +22,10 @@ const roomBillSchema = new mongoose.Schema({
   ngay_tra: {
     type: Date,
     default: new Date(),
+  },
+  thanh_toan: {
+    type: Boolean,
+    default: false,
   },
 });
 
