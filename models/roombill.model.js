@@ -23,6 +23,9 @@ const roomBillSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  tong_tien: {
+    type: Number,
+  },
   thanh_toan: {
     type: Boolean,
     default: false,

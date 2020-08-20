@@ -3,7 +3,7 @@ const Room = require("../models/room.model");
 const catRoom = require("../models/cat-room.model");
 const RoomBill = require("../models/roombill.model");
 const { response } = require("express");
-const { route } = require("./auth.route");
+const moment = require("moment");
 
 router.get("/", (req, res) => {
   res.render("index");
@@ -264,7 +264,7 @@ router.post("/datphong", (req, res) => {
 
 // Trả phòng
 router.get("/traphong", (req, res) => {
-  RoomBill.find()
+  RoomBill.find({ thanh_toan: false })
     .populate("phong_thue")
     .then((response) => {
       console.log(response);
@@ -283,7 +283,10 @@ router.get("/traphong/thanhtoan/:id", (req, res) => {
     .populate({ path: "phong_thue", populate: { path: "loai" } })
     .then((response) => {
       let now = new Date();
-      response.songaythue = response.ngay_thue.getDay() - now.getDay();
+      response.songaythue = response.ngay_thue.getDate() - now.getDate();
+      response.tongtien = Math.abs(
+        response.songaythue * response.phong_thue.loai.don_gia
+      );
       console.log(response);
       res.render("thanhtoanphong", {
         roombill: response,
@@ -312,17 +315,12 @@ router.post("/traphong/thanhtoan/:id", (req, res) => {
     });
 });
 
-router.get("/traphong/chinhsuadatphong", (req, res) => {
-  res.render("chinhsuadatphong");
-});
-
-// Hoá đơn thuê phòng
-router.get("/hoadonthuephong", (req, res) => {
-  RoomBill.find({ thanh_toan: true })
+router.get("/traphong/chinhsuadatphong/:id", (req, res) => {
+  RoomBill.findById(req.params.id)
     .then((response) => {
       console.log(response);
-      res.render("danhsachhoadonthuephong", {
-        roombills: response,
+      res.render("chinhsuadatphong", {
+        roombill: response,
       });
     })
     .catch((err) => {
@@ -342,7 +340,33 @@ router.post("traphong/xoadatphong/:id", (req, res) => {
     });
 });
 
-router.get("/hoadonthuephong/xoahoadon/:id", (req, res) => {
+// Hoá đơn thuê phòng
+router.get("/hoadonthuephong", (req, res) => {
+  RoomBill.find({ thanh_toan: true })
+    .populate({ path: "phong_thue", populate: { path: "loai" } })
+    .then((response) => {
+      console.log(response);
+      let roombills = response;
+      roombills = roombills.map((element) => {
+        ngay_thue = moment(element.ngay_thue).format("L");
+        ngay_tra = moment(element.ngay_tra).format("L");
+        element.ngaythue = ngay_thue;
+        element.ngaytra = ngay_tra;
+        element.tongtien =
+          Math.abs(element.ngay_thue.getDate() - element.ngay_tra.getDate()) *
+          element.phong_thue.loai.don_gia;
+        return element;
+      });
+      res.render("danhsachhoadonthuephong", {
+        roombills,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.post("/hoadonthuephong/xoahoadon/:id", (req, res) => {
   RoomBill.findByIdAndRemove(req.params.id)
     .then((response) => {
       console.log(response);

@@ -12,40 +12,40 @@
       rel="stylesheet"
       href="assets/vendor/bootstrap/css/bootstrap.min.css"
     />
-    <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/libs/css/style.css" />
+    <link href="/assets/vendor/fonts/circular-std/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/libs/css/style.css" />
     <link
       rel="stylesheet"
-      href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css"
+      href="/assets/vendor/fonts/fontawesome/css/fontawesome-all.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="./assets/vendor/datatables/css/dataTables.bootstrap4.css"
+      href="/assets/vendor/datatables/css/dataTables.bootstrap4.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="./assets/vendor/datatables/css/buttons.bootstrap4.css"
+      href="/assets/vendor/datatables/css/buttons.bootstrap4.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="./assets/vendor/datatables/css/select.bootstrap4.css"
+      href="/assets/vendor/datatables/css/select.bootstrap4.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="./assets/vendor/datatables/css/fixedHeader.bootstrap4.css"
+      href="/assets/vendor/datatables/css/fixedHeader.bootstrap4.css"
     />
     <link
       rel="stylesheet"
-      href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css"
+      href="/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css"
     />
-    <link rel="stylesheet" href="assets/vendor/charts/c3charts/c3.css" />
+    <link rel="stylesheet" href="/assets/vendor/charts/c3charts/c3.css" />
     <link
       rel="stylesheet"
-      href="assets/vendor/fonts/flag-icon-css/flag-icon.min.css"
+      href="/assets/vendor/fonts/flag-icon-css/flag-icon.min.css"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;1,100&display=swap"
@@ -131,14 +131,15 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <% roombills.forEach((element, index) => { %>
                           <tr>
-                            <td>1</td>
-                            <td>Nguyễn Văn A</td>
-                            <td>312369245</td>
-                            <td>Phòng 101</td>
-                            <td>10/08/2020</td>
-                            <td>12/08/2020</td>
-                            <td>1.000.000</td>
+                            <td><%= index + 1 %></td>
+                            <td><%= element.ten %></td>
+                            <td><%= element.cmnd %></td>
+                            <td><%= element.phong_thue.ten_phong %></td>
+                            <td><%= element.ngaythue %></td>
+                            <td><%= element.ngaytra %></td>
+                            <td><%= element.tongtien %></td>
                             <td>
                               <button
                                 type="button"
@@ -149,88 +150,62 @@
                                 Xoá
                                 <i class="fas fa-trash"></i>
                               </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Nguyễn Văn A</td>
-                            <td>312369245</td>
-                            <td>Phòng 101</td>
-                            <td>10/08/2020</td>
-                            <td>12/08/2020</td>
-                            <td>1.000.000</td>
-                            <td>
-                              <button
-                                type="button"
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                                class="btn btn-danger"
+                              <!-- Modal -->
+                              <div
+                                class="modal fade"
+                                id="exampleModalCenter"
+                                tabindex="-1"
+                                role="dialog"
+                                aria-labelledby="exampleModalCenterTitle"
+                                aria-hidden="true"
                               >
-                                Xoá
-                                <i class="fas fa-trash"></i>
-                              </button>
+                                <div
+                                  class="modal-dialog modal-dialog-centered"
+                                  role="document"
+                                >
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5
+                                        class="modal-title"
+                                        id="exampleModalLongTitle"
+                                      >
+                                        Bạn có thực sự muốn xoá không ?
+                                      </h5>
+                                      <button
+                                        type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close"
+                                      >
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-dismiss="modal"
+                                      >
+                                        Huỷ bỏ
+                                      </button>
+                                      <form
+                                        action="/hoadonthuephong/xoahoadon/<%= element._id%>"
+                                        method="post"
+                                      >
+                                        <button
+                                          type="submit"
+                                          class="btn btn-primary"
+                                        >
+                                          Chấp nhận
+                                        </button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             </td>
                           </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Nguyễn Văn A</td>
-                            <td>312369245</td>
-                            <td>Phòng 101</td>
-                            <td>10/08/2020</td>
-                            <td>12/08/2020</td>
-                            <td>1.000.000</td>
-                            <td>
-                              <button
-                                type="button"
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                                class="btn btn-danger"
-                              >
-                                Xoá
-                                <i class="fas fa-trash"></i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Nguyễn Văn A</td>
-                            <td>312369245</td>
-                            <td>Phòng 101</td>
-                            <td>10/08/2020</td>
-                            <td>12/08/2020</td>
-                            <td>1.000.000</td>
-                            <td>
-                              <button
-                                type="button"
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                                class="btn btn-danger"
-                              >
-                                Xoá
-                                <i class="fas fa-trash"></i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Nguyễn Văn A</td>
-                            <td>312369245</td>
-                            <td>Phòng 101</td>
-                            <td>10/08/2020</td>
-                            <td>12/08/2020</td>
-                            <td>1.000.000</td>
-                            <td>
-                              <button
-                                type="button"
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                                class="btn btn-danger"
-                              >
-                                Xoá
-                                <i class="fas fa-trash"></i>
-                              </button>
-                            </td>
-                          </tr>
+                          <% })%>
                         </tbody>
                       </table>
                     </div>
@@ -254,45 +229,6 @@
       <!-- ============================================================== -->
       <!-- end wrapper  -->
       <!-- ============================================================== -->
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="exampleModalCenter"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">
-                Bạn có thực sự muốn xoá không ?
-              </h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Huỷ bỏ
-              </button>
-              <button type="button" class="btn btn-primary">
-                Chấp nhận
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <!-- ============================================================== -->
     <!-- end main wrapper  -->
