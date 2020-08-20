@@ -4,6 +4,7 @@ const catRoom = require("../models/cat-room.model");
 const RoomBill = require("../models/roombill.model");
 const { response } = require("express");
 const moment = require("moment");
+const { populate } = require("../models/room.model");
 
 router.get("/", (req, res) => {
   res.render("index");
@@ -29,7 +30,6 @@ router.post("/quanlyloaiphong/themloaiphong", (req, res) => {
   const { ten, soluong, dongia } = req.body;
   const newCatRoom = new catRoom({
     ten: ten,
-    so_luong: soluong,
     don_gia: dongia,
   });
 
@@ -70,12 +70,10 @@ router.get("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
 });
 
 router.post("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
-  const { ten, soluong, dongia } = req.body;
-  console.log(ten, " ", soluong, " ", dongia);
+  const { ten, dongia } = req.body;
   catRoom
     .findByIdAndUpdate(req.params.id, {
       ten: ten,
-      so_luong: soluong,
       don_gia: dongia,
     })
     .then((response) => {
@@ -125,6 +123,7 @@ router.post("/quanlyphong/themphong", (req, res) => {
   newRoom
     .save()
     .then((response) => {
+      catRoom.findOneAndUpdate();
       res.redirect("/quanlyphong");
     })
     .catch((err) => {
@@ -283,10 +282,11 @@ router.get("/traphong/thanhtoan/:id", (req, res) => {
     .populate({ path: "phong_thue", populate: { path: "loai" } })
     .then((response) => {
       let now = new Date();
-      response.songaythue = response.ngay_thue.getDate() - now.getDate();
-      response.tongtien = Math.abs(
-        response.songaythue * response.phong_thue.loai.don_gia
+      response.songaythue = Math.abs(
+        response.ngay_thue.getDate() - now.getDate()
       );
+      response.tongtien =
+        response.songaythue * response.phong_thue.loai.don_gia;
       console.log(response);
       res.render("thanhtoanphong", {
         roombill: response,
@@ -317,22 +317,72 @@ router.post("/traphong/thanhtoan/:id", (req, res) => {
 
 router.get("/traphong/chinhsuadatphong/:id", (req, res) => {
   RoomBill.findById(req.params.id)
+    .populate("phong_thue")
     .then((response) => {
       console.log(response);
-      res.render("chinhsuadatphong", {
-        roombill: response,
-      });
+      let ngay = response.ngay_thue.getDate();
+      let thang = "0" + (response.ngay_thue.getMonth() + 1).toString();
+      let nam = response.ngay_thue.getFullYear();
+      let ngaythue =
+        nam.toString() + "-" + thang.slice(-2) + "-" + ngay.toString();
+      Room.find({ tinh_trang: false })
+        .then((response1) => {
+          res.render("chinhsuadatphong", {
+            roombill: response,
+            rooms: response1,
+            ngaythue,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
     });
 });
 
-router.post("traphong/xoadatphong/:id", (req, res) => {
+router.post("/traphong/chinhsuadatphong/:id", (req, res) => {
+  const { ten, cmnd, phongthue, ngaythue, phongcu } = req.body;
+  RoomBill.findByIdAndUpdate(req.params.id, {
+    ten,
+    cmnd,
+    phong_thue: phongthue,
+    ngay_thue: ngaythue,
+  })
+    .then((response) => {
+      if (phongcu !== phongthue) {
+        Promise.all([
+          Room.findByIdAndUpdate(phongcu, { tinh_trang: false }),
+          Room.findByIdAndUpdate(phongthue, { tinh_trang: true }),
+        ])
+          .then((response) => {
+            console.log(response);
+            res.redirect("/traphong");
+          })
+          .catch((err) => console.log(err));
+      } else {
+        res.redirect("/traphong");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.post("/traphong/xoadatphong/:id", (req, res) => {
   RoomBill.findByIdAndDelete(req.params.id)
     .then((response) => {
       console.log(response);
-      res.redirect("back");
+      Room.findByIdAndUpdate(req.body.phongthue, {
+        tinh_trang: false,
+      })
+        .then((response1) => {
+          res.redirect("back");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -363,6 +413,7 @@ router.get("/hoadonthuephong", (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+      res.redirect("back");
     });
 });
 

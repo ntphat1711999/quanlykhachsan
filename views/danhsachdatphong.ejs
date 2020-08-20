@@ -200,6 +200,11 @@
                                         action="/traphong/xoadatphong/<%= element._id %>"
                                         method="POST"
                                       >
+                                        <input
+                                          type="hidden"
+                                          name="phongthue"
+                                          value="<%= element.phong_thue._id %>"
+                                        />
                                         <button
                                           type="submit"
                                           class="btn btn-primary"

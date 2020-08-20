@@ -137,7 +137,7 @@
                         <tbody>
                           <% rooms.forEach((element, index) => { %>
                           <tr>
-                            <td><%= index %></td>
+                            <td><%= index + 1 %></td>
                             <td><%= element.ten_phong%></td>
                             <td><%= element.loai.ten %></td>
                             <td>
@@ -176,10 +176,16 @@
                                 aria-labelledby="exampleModalCenterTitle"
                                 aria-hidden="true"
                               >
-                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div
+                                  class="modal-dialog modal-dialog-centered"
+                                  role="document"
+                                >
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLongTitle">
+                                      <h5
+                                        class="modal-title"
+                                        id="exampleModalLongTitle"
+                                      >
                                         Bạn có thực sự muốn xoá không ?
                                       </h5>
                                       <button
@@ -199,8 +205,14 @@
                                       >
                                         Huỷ bỏ
                                       </button>
-                                      <form action="/quanlyphong/xoaphong/<%= element._id %>" method="POST">
-                                        <button type="submit" class="btn btn-primary">
+                                      <form
+                                        action="/quanlyphong/xoaphong/<%= element._id %>"
+                                        method="POST"
+                                      >
+                                        <button
+                                          type="submit"
+                                          class="btn btn-primary"
+                                        >
                                           Chấp nhận
                                         </button>
                                       </form>
@@ -234,7 +246,6 @@
       <!-- ============================================================== -->
       <!-- end wrapper  -->
       <!-- ============================================================== -->
-      
     </div>
     <!-- ============================================================== -->
     <!-- end main wrapper  -->

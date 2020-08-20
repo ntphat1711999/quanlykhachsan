@@ -101,30 +101,58 @@
             <!-- ============================================================== -->
             <div class="ecommerce-widget">
               <div class="row">
-                <form class="col-6">
+                <form class="col-6" method="POST">
                   <div class="form-group">
                     <label for="name">Họ và tên</label>
-                    <input type="text" class="form-control" id="name" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="ten"
+                      id="name"
+                      value="<%= roombill.ten%>"
+                    />
                   </div>
                   <div class="form-group">
                     <label for="cmnd">CMND </label>
-                    <input type="text" class="form-control" id="cmnd" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cmnd"
+                      name="cmnd"
+                      value="<%= roombill.cmnd%>"
+                    />
                   </div>
                   <div class="form-group">
                     <label for="phongthue">Phòng thuê</label>
+                    <input
+                      type="hidden"
+                      name="phongcu"
+                      value="<%= roombill.phong_thue._id%>"
+                    />
                     <select
                       name="phongthue"
                       class="form-control"
                       id="phongthue"
                     >
-                      <option value="1">Phòng 101</option>
-                      <option value="2">Phòng 102</option>
-                      <option value="3">Phòng 103</option>
+                      <option value="<%= roombill.phong_thue._id%>"
+                        ><%= roombill.phong_thue.ten_phong%></option
+                      >
+                      <% rooms.forEach(element => { %>
+                      <option value="<%= element._id%>"
+                        ><%= element.ten_phong%></option
+                      >
+                      <% }) %>
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="date">Ngày bắt đầu thuê </label>
-                    <input type="date" class="form-control" id="date" />
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="date"
+                      name="ngaythue"
+                      value="<%= ngaythue%>"
+                    />
                   </div>
                   <button type="submit" class="btn btn-primary">Lưu</button>
                   <a href="/traphong">

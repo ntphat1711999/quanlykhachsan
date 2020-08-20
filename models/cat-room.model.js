@@ -7,10 +7,6 @@ const catRoomSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  so_luong: {
-    type: Number,
-    required: true,
-  },
   don_gia: {
     type: Number,
     default: 1000000,
