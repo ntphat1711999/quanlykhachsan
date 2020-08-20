@@ -195,19 +195,6 @@ router.get("/quanlythucan/chinhsuathucan", (req, res) => {
   res.render("chinhsuathucan");
 });
 
-// Quản lý nhân viên
-router.get("/quanlynhanvien", (req, res) => {
-  res.render("quanlynhanvien");
-});
-
-router.get("/quanlynhanvien/themnhanvien", (req, res) => {
-  res.render("themnhanvien");
-});
-
-router.get("/quanlynhanvien/chinhsuanhanvien", (req, res) => {
-  res.render("chinhsuanhanvien");
-});
-
 // Quản lý tài khoản
 router.get("/capnhatthongtin", (req, res) => {
   res.render("capnhatthongtin");

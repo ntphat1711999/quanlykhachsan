@@ -14,7 +14,7 @@ const app = express();
 const PORT = 5000;
 const MONGO_URL =
   "mongodb+srv://admin:Ud16X3zDchiMsFd9@cluster0.elca9.mongodb.net/quanlykhachsan?retryWrites=true&w=majority";
-  //"mongodb+srv://dpldevil:dplong99@cluster0-2mpsa.mongodb.net/quanlykhachsan?retryWrites=true&w=majority";
+//"mongodb+srv://dpldevil:dplong99@cluster0-2mpsa.mongodb.net/quanlykhachsan?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,
@@ -67,6 +67,7 @@ app.use(passport.session());
 // routes
 app.use("/auth", require("./routes/auth.route"));
 app.use("/", require("./routes/index.route"));
+app.use("/quanlynhanvien", require("./routes/staff.route"));
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
