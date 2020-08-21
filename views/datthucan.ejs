@@ -10,22 +10,22 @@
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
-      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      href="/assets/vendor/bootstrap/css/bootstrap.min.css"
     />
-    <link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/libs/css/style.css" />
+    <link href="/assets/vendor/fonts/circular-std/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/libs/css/style.css" />
     <link
       rel="stylesheet"
-      href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css"
+      href="/assets/vendor/fonts/fontawesome/css/fontawesome-all.css"
     />
     <link
       rel="stylesheet"
-      href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css"
+      href="/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css"
     />
-    <link rel="stylesheet" href="assets/vendor/charts/c3charts/c3.css" />
+    <link rel="stylesheet" href="/assets/vendor/charts/c3charts/c3.css" />
     <link
       rel="stylesheet"
-      href="assets/vendor/fonts/flag-icon-css/flag-icon.min.css"
+      href="/assets/vendor/fonts/flag-icon-css/flag-icon.min.css"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;1,100&display=swap"
@@ -88,14 +88,24 @@
             <!-- ============================================================== -->
             <div class="ecommerce-widget">
               <div>
-                <form class="row">
+                <form class="row" method="GET" action="/datthucan/thanhtoan">
                   <div class="form-group col-6">
                     <label for="name">Tên khách hàng</label>
-                    <input type="text" class="form-control" id="name" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      name="ten"
+                    />
                   </div>
                   <div class="form-group col-6">
                     <label for="room">Phòng</label>
-                    <input type="text" class="form-control" id="room" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="room"
+                      name="phong"
+                    />
                   </div>
                   <div class="form-group col-12">
                     <table class="table table-order-food">
@@ -103,43 +113,36 @@
                         <tr>
                           <th scope="col">Thức ăn</th>
                           <th scope="col">Số lượng</th>
-                          <th scope="col">Đơn giá</th>
-                          <th scope="col">Thành giá</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody class="rowFood">
+                        <% foods.forEach(element => { %>
                         <tr>
                           <td>
-                            <select name="food" id="">
-                              <option value="mon1">Món 1</option>
-                              <option value="mon2">Món 2</option>
-                              <option value="mon3">Món 3</option>
-                              <option value="mon4">Món 5</option>
-                            </select>
+                            <input
+                              type="hidden"
+                              name="thuc_an"
+                              id=""
+                              value="<%= element._id%>"
+                            />
+                            <%= element.ten_thuc_an%>
                           </td>
                           <td>
                             <input
                               type="number"
-                              name="amount"
-                              id=""
-                              placeholder="1"
+                              value="0"
+                              name="so_luong"
+                              max="<%= element.so_luong%>"
                             />
                           </td>
-                          <td>100.000</td>
-                          <td>1.000.000</td>
                         </tr>
+                        <% })%>
                       </tbody>
                     </table>
-                    <button type="button" class="btn-add-food">Thêm món</button>
                   </div>
-                  <a href="/dathucan/thanhtoan">
-                    <button
-                      type="submit"
-                      class="btn btn-outline-success col-12"
-                    >
-                      Tạo hoá đơn
-                    </button>
-                  </a>
+                  <button type="submit" class="btn btn-outline-success col-12">
+                    Tạo hoá đơn
+                  </button>
                 </form>
               </div>
             </div>
@@ -162,42 +165,17 @@
     <!-- ============================================================== -->
     <!-- Optional JavaScript -->
     <!-- jquery 3.3.1 -->
-    <script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
     <!-- bootstap bundle js -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <!-- slimscroll js -->
-    <script src="assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+    <script src="/assets/vendor/slimscroll/jquery.slimscroll.js"></script>
     <!-- main js -->
-    <script src="assets/libs/js/main-js.js"></script>
+    <script src="/assets/libs/js/main-js.js"></script>
     <!-- chart chartist js -->
-    <script src="assets/vendor/charts/chartist-bundle/chartist.min.js"></script>
+    <script src="/assets/vendor/charts/chartist-bundle/chartist.min.js"></script>
     <!-- sparkline js -->
-    <script src="assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
-    <script src="assets/libs/js/dashboard-ecommerce.js"></script>
-    <script>
-      $(".btn-add-food").on("click", function () {
-        const content = `<tr> 
-                          <td>
-                            <select name="food" id="">
-                              <option value="mon1">Món 1</option>
-                              <option value="mon2">Món 2</option>
-                              <option value="mon3">Món 3</option>
-                              <option value="mon4">Món 5</option>
-                            </select>
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              name="amount"
-                              id=""
-                              placeholder="1"
-                            />
-                          </td>
-                          <td>100.000</td>
-                          <td>1.000.000</td>
-                        </tr>`;
-        $(".table-order-food tbody").append(content);
-      });
-    </script>
+    <script src="/assets/vendor/charts/sparkline/jquery.sparkline.js"></script>
+    <script src="/assets/libs/js/dashboard-ecommerce.js"></script>
   </body>
 </html>

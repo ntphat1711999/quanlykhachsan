@@ -104,15 +104,24 @@
                 <form class="col-6" method="post">
                   <div class="form-group">
                     <label for="name">Tên thức ăn</label>
-                    <input type="text" class="form-control" id="name" name="ten_thuc_an" value="<%= foods.ten_thuc_an %>" />
-                  </div>
-                  <div class="form-group">
-                    <label for="cmnd">Số lượng</label>
-                    <input type="text" class="form-control" id="cmnd" name="so_luong" value="<%= foods.so_luong %>" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      name="ten_thuc_an"
+                      value="<%= foods.ten_thuc_an %>"
+                    />
                   </div>
                   <div class="form-group">
                     <label for="salary">Đơn giá</label>
-                    <input type="text" class="form-control" id="salary" name="don_gia" value="<%= foods.don_gia %>"/>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="salary"
+                      step="1000"
+                      name="don_gia"
+                      value="<%= foods.don_gia %>"
+                    />
                   </div>
                   <button type="submit" class="btn btn-primary">Lưu</button>
                   <a href="/quanlythucan">
@@ -126,16 +135,7 @@
         <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
-        <div class="footer">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                Copyright © 2018 Concept. All rights reserved. Dashboard by
-                <a href="https://colorlib.com/wp/">Colorlib</a>.
-              </div>
-            </div>
-          </div>
-        </div>
+        <%- include('partials/footer') %>
         <!-- ============================================================== -->
         <!-- end footer -->
         <!-- ============================================================== -->

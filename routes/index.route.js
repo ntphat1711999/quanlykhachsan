@@ -6,6 +6,7 @@ const { response } = require("express");
 const moment = require("moment");
 const { populate } = require("../models/room.model");
 const Food = require("../models/food.model");
+const FoodBill = require("../models/foodbill.model");
 
 router.get("/", (req, res) => {
   res.render("index");
@@ -195,29 +196,30 @@ router.post("/quanlyphong/xoaphong", (req, res) => {
 
 // Quản lý thức ăn
 router.get("/quanlythucan", (req, res) => {
-  Food.find()
-    .then(response => {
+  Food.find({ isDelete: false })
+    .then((response) => {
       res.render("quanlythucan", {
-        foods: response
+        foods: response,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       res.redirec("/quanlythucan");
     });
 });
 
 router.post("/quanlythucan/themthucan", (req, res) => {
-  const { ten_thuc_an, so_luong, don_gia } = req.body;
+  const { ten_thuc_an, don_gia } = req.body;
   let newFood = new Food();
   newFood.ten_thuc_an = ten_thuc_an;
-  newFood.so_luong = so_luong;
   newFood.don_gia = don_gia;
-  newFood.save().then(response => {
-    res.redirect("/quanlythucan");
-  })
-  .catch((err) => {
-    res.redirect("back");
-  });
+  newFood
+    .save()
+    .then((response) => {
+      res.redirect("/quanlythucan");
+    })
+    .catch((err) => {
+      res.redirect("back");
+    });
 });
 
 router.get("/quanlythucan/themthucan", (req, res) => {
@@ -226,38 +228,37 @@ router.get("/quanlythucan/themthucan", (req, res) => {
 
 router.get("/quanlythucan/chinhsuathucan/:id", (req, res) => {
   Food.findById(req.params.id)
-    .then(response => {
+    .then((response) => {
       res.render("chinhsuathucan", {
-        foods: response
+        foods: response,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       res.redirect("back");
     });
 });
 
 router.post("/quanlythucan/chinhsuathucan/:id", (req, res) => {
-  const { ten_thuc_an, so_luong, don_gia } = req.body;
+  const { ten_thuc_an, don_gia } = req.body;
 
   Food.findByIdAndUpdate(req.params.id, {
     ten_thuc_an,
-    so_luong,
-    don_gia
+    don_gia,
   })
-    .then(reponse => {
+    .then((reponse) => {
       res.redirect("/quanlythucan");
     })
-    .catch(err => {
+    .catch((err) => {
       res.redirect("back");
     });
 });
 
 router.post("/quanlythucan/xoathuan/:id", (req, res) => {
-  Food.findByIdAndRemove(req.params.id)
-    .then(response => {
+  Food.findByIdAndUpdate(req.params.id, { isDelete: true })
+    .then((response) => {
       res.redirect("back");
     })
-    .catch(err => {
+    .catch((err) => {
       console.err(err.message);
       res.redirect("back");
     });
@@ -486,11 +487,86 @@ router.post("/hoadonthuephong/xoahoadon", (req, res) => {
 
 // Đặt thức ăn
 router.get("/datthucan", (req, res) => {
-  res.render("datthucan");
+  Food.find({ isDelete: false })
+    .then((response) => {
+      console.log(response);
+      res.render("datthucan", {
+        foods: response,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("back");
+    });
 });
 
 router.get("/datthucan/thanhtoan", (req, res) => {
-  res.render("taohoadonthucan");
+  const { ten, phong, thuc_an, so_luong } = req.query;
+  Food.find({ _id: { $in: thuc_an } })
+    .then((response) => {
+      console.log(response);
+      let tong_tien = 0;
+      response.forEach((element, index) => {
+        tong_tien += element.don_gia * so_luong[index];
+      });
+      res.render("taohoadonthucan", {
+        ten,
+        phong,
+        thuc_an,
+        so_luong,
+        tong_tien,
+        foods: response,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("back");
+    });
+});
+
+router.post("/datthucan/thanhtoan", (req, res) => {
+  const { ten, phong, thuc_an, tong_tien } = req.body;
+  console.log(req.body);
+  const newFoodBill = new FoodBill({
+    ten,
+    phong,
+    thuc_an,
+    tong_tien,
+  });
+
+  newFoodBill
+    .save()
+    .then((response) => {
+      console.log(response);
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("back");
+    });
+});
+
+router.get("/hoadonthucan", (req, res) => {
+  FoodBill.find()
+    .then((response) => {
+      console.log(response);
+      res.render("danhsachhoadonthucan", {
+        foodbills: response,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("back");
+    });
+});
+
+router.post("/hoadonthucan/xoahoadon/:id", (req, res) => {
+  FoodBill.findByIdAndDelete(req.params.id)
+    .then((response) => res.redirect("/hoadonthucan"))
+    .catch((err) => {
+      console.log(err);
+      res.redirect("back");
+    });
 });
 
 module.exports = router;
