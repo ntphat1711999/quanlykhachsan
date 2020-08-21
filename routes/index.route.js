@@ -5,6 +5,7 @@ const RoomBill = require("../models/roombill.model");
 const { response } = require("express");
 const moment = require("moment");
 const { populate } = require("../models/room.model");
+const Food = require("../models/food.model");
 
 router.get("/", (req, res) => {
   res.render("index");
@@ -184,15 +185,72 @@ router.post("/quanlyphong/xoaphong/:id", (req, res) => {
 
 // Quản lý thức ăn
 router.get("/quanlythucan", (req, res) => {
-  res.render("quanlythucan");
+  Food.find()
+    .then(response => {
+      res.render("quanlythucan", {
+        foods: response
+      });
+    })
+    .catch(err => {
+      res.redirec("/quanlythucan");
+    });
+});
+
+router.post("/quanlythucan/themthucan", (req, res) => {
+  const { ten_thuc_an, so_luong, don_gia } = req.body;
+  let newFood = new Food();
+  newFood.ten_thuc_an = ten_thuc_an;
+  newFood.so_luong = so_luong;
+  newFood.don_gia = don_gia;
+  newFood.save().then(response => {
+    res.redirect("/quanlythucan");
+  })
+  .catch((err) => {
+    res.redirect("back");
+  });
 });
 
 router.get("/quanlythucan/themthucan", (req, res) => {
   res.render("themthucan");
 });
 
-router.get("/quanlythucan/chinhsuathucan", (req, res) => {
-  res.render("chinhsuathucan");
+router.get("/quanlythucan/chinhsuathucan/:id", (req, res) => {
+  Food.findById(req.params.id)
+    .then(response => {
+      res.render("chinhsuathucan", {
+        foods: response
+      });
+    })
+    .catch(err => {
+      res.redirect("back");
+    });
+});
+
+router.post("/quanlythucan/chinhsuathucan/:id", (req, res) => {
+  const { ten_thuc_an, so_luong, don_gia } = req.body;
+
+  Food.findByIdAndUpdate(req.params.id, {
+    ten_thuc_an,
+    so_luong,
+    don_gia
+  })
+    .then(reponse => {
+      res.redirect("/quanlythucan");
+    })
+    .catch(err => {
+      res.redirect("back");
+    });
+});
+
+router.post("/quanlythucan/xoathuan/:id", (req, res) => {
+  Food.findByIdAndRemove(req.params.id)
+    .then(response => {
+      res.redirect("back");
+    })
+    .catch(err => {
+      console.err(err.message);
+      res.redirect("back");
+    });
 });
 
 // Quản lý tài khoản
