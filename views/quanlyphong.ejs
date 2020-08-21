@@ -136,10 +136,16 @@
                         </thead>
                         <tbody>
                           <% rooms.forEach((element, index) => { %>
-                          <tr>
+                          <tr class="room">
                             <td><%= index + 1 %></td>
                             <td><%= element.ten_phong%></td>
                             <td><%= element.loai.ten %></td>
+                            <input
+                              type="hidden"
+                              name=""
+                              class="roomId"
+                              value="<%= element._id%>"
+                            />
                             <td>
                               <% if (element.tinh_trang) { %>
                               <button type="button" class="btn btn-danger">
@@ -162,64 +168,11 @@
                                 type="button"
                                 data-toggle="modal"
                                 data-target="#exampleModalCenter"
-                                class="btn btn-danger"
+                                class="btn btn-danger btn-del"
                               >
                                 Xoá
                                 <i class="fas fa-trash"></i>
                               </button>
-                              <!-- Modal -->
-                              <div
-                                class="modal fade"
-                                id="exampleModalCenter"
-                                tabindex="-1"
-                                role="dialog"
-                                aria-labelledby="exampleModalCenterTitle"
-                                aria-hidden="true"
-                              >
-                                <div
-                                  class="modal-dialog modal-dialog-centered"
-                                  role="document"
-                                >
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5
-                                        class="modal-title"
-                                        id="exampleModalLongTitle"
-                                      >
-                                        Bạn có thực sự muốn xoá không ?
-                                      </h5>
-                                      <button
-                                        type="button"
-                                        class="close"
-                                        data-dismiss="modal"
-                                        aria-label="Close"
-                                      >
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button
-                                        type="button"
-                                        class="btn btn-secondary"
-                                        data-dismiss="modal"
-                                      >
-                                        Huỷ bỏ
-                                      </button>
-                                      <form
-                                        action="/quanlyphong/xoaphong/<%= element._id %>"
-                                        method="POST"
-                                      >
-                                        <button
-                                          type="submit"
-                                          class="btn btn-primary"
-                                        >
-                                          Chấp nhận
-                                        </button>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
                             </td>
                           </tr>
                           <% }) %>
@@ -232,6 +185,48 @@
               <!-- ============================================================== -->
               <!-- end basic table  -->
               <!-- ============================================================== -->
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="exampleModalCenter"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">
+                        Bạn có thực sự muốn xoá không ?
+                      </h5>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Huỷ bỏ
+                      </button>
+                      <form action="/quanlyphong/xoaphong" method="POST">
+                        <input type="hidden" name="iddel" value="" id="iddel" />
+                        <button type="submit" class="btn btn-primary">
+                          Chấp nhận
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -271,5 +266,10 @@
     <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
     <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
     <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+    <script>
+      $(".btn-del").on("click", function () {
+        $("#iddel").val($(this).closest(".room").children(".roomId").val());
+      });
+    </script>
   </body>
 </html>

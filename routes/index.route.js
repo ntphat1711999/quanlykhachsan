@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 // Quản lý loại phòng
 router.get("/quanlyloaiphong", (req, res) => {
   catRoom
-    .find()
+    .find({ isDelete: false })
     .then((response) => {
       res.render("quanlyloaiphong", {
         catRooms: response,
@@ -27,7 +27,7 @@ router.get("/quanlyloaiphong/themloaiphong", (req, res) => {
 });
 
 router.post("/quanlyloaiphong/themloaiphong", (req, res) => {
-  const { ten, soluong, dongia } = req.body;
+  const { ten, dongia } = req.body;
   const newCatRoom = new catRoom({
     ten: ten,
     don_gia: dongia,
@@ -43,9 +43,11 @@ router.post("/quanlyloaiphong/themloaiphong", (req, res) => {
     });
 });
 
-router.post("/quanlyloaiphong/xoaloaiphong/:id", (req, res) => {
-  catRoom
-    .findByIdAndRemove(req.params.id)
+router.post("/quanlyloaiphong/xoaloaiphong", (req, res) => {
+  Promise.all([
+    catRoom.findByIdAndUpdate(req.body.iddel, { isDelete: true }),
+    Room.findOneAndUpdate({ loai: req.body.iddel }, { isDelete: true }),
+  ])
     .then((response) => {
       res.redirect("back");
     })
@@ -87,11 +89,17 @@ router.post("/quanlyloaiphong/chinhsualoaiphong/:id", (req, res) => {
 
 // Quản lý phòng
 router.get("/quanlyphong", (req, res) => {
-  Room.find()
+  Room.find({ isDelete: false })
     .populate("loai")
     .then((response) => {
+      let rooms = response.filter((element) => {
+        if (element.loai.isDelete === false) {
+          return element;
+        }
+      });
+      console.log(rooms);
       res.render("quanlyphong", {
-        rooms: response,
+        rooms: rooms,
       });
     })
     .catch((err) => {
@@ -102,7 +110,7 @@ router.get("/quanlyphong", (req, res) => {
 
 router.get("/quanlyphong/themphong", (req, res) => {
   catRoom
-    .find()
+    .find({ isDelete: false })
     .then((response) => {
       res.render("themphong", {
         catRooms: response,
@@ -135,7 +143,7 @@ router.post("/quanlyphong/themphong", (req, res) => {
 router.get("/quanlyphong/chinhsuaphong/:id", (req, res) => {
   let cat;
   catRoom
-    .find()
+    .find({ isDelete: false })
     .then((cats) => {
       cat = cats;
     })
@@ -172,8 +180,10 @@ router.post("/quanlyphong/chinhsuaphong/:id", (req, res) => {
     });
 });
 
-router.post("/quanlyphong/xoaphong/:id", (req, res) => {
-  Room.findByIdAndRemove(req.params.id)
+router.post("/quanlyphong/xoaphong", (req, res) => {
+  Room.findByIdAndUpdate(req.body.iddel, {
+    isDelete: true,
+  })
     .then((response) => {
       res.redirect("back");
     })
@@ -206,7 +216,7 @@ router.get("/doimatkhau", (req, res) => {
 
 // Đặt phòng
 router.get("/datphong", (req, res) => {
-  Room.find({ tinh_trang: false })
+  Room.find({ tinh_trang: false, isDelete: false })
     .then((response) => {
       res.render("datphong", {
         rooms: response,
@@ -357,8 +367,8 @@ router.post("/traphong/chinhsuadatphong/:id", (req, res) => {
     });
 });
 
-router.post("/traphong/xoadatphong/:id", (req, res) => {
-  RoomBill.findByIdAndDelete(req.params.id)
+router.post("/traphong/xoadatphong", (req, res) => {
+  RoomBill.findByIdAndDelete(req.body.iddel)
     .then((response) => {
       console.log(response);
       Room.findByIdAndUpdate(req.body.phongthue, {
@@ -404,8 +414,8 @@ router.get("/hoadonthuephong", (req, res) => {
     });
 });
 
-router.post("/hoadonthuephong/xoahoadon/:id", (req, res) => {
-  RoomBill.findByIdAndRemove(req.params.id)
+router.post("/hoadonthuephong/xoahoadon", (req, res) => {
+  RoomBill.findByIdAndRemove(req.body.iddel)
     .then((response) => {
       console.log(response);
       res.redirect("back");

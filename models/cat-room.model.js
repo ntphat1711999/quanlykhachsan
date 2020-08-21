@@ -5,11 +5,14 @@ const catRoomSchema = new mongoose.Schema({
     type: String,
     trim: true,
     required: true,
-    unique: true,
   },
   don_gia: {
     type: Number,
     default: 1000000,
+  },
+  isDelete: {
+    type: Boolean,
+    default: false,
   },
 });
 

@@ -15,6 +15,10 @@ const RoomSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isDelete: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("room", RoomSchema);
